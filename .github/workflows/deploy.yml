@@ -30,7 +30,7 @@ jobs:
       - name: Collect site files
         run: |
           mkdir -p _site
-          cp -r index.html cv assets _site/
+          cp -r index.html cv assets .htaccess _site/
 
       - name: Upload to host over SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.6
