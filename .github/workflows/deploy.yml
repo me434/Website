@@ -1,14 +1,13 @@
-# Uploads the website to maxdodson.co.uk over FTP.
+# Uploads the website to maxdodson.co.uk over SFTP.
 # Runs automatically when changes reach main, or by hand from the Actions tab.
 #
 # Needs these repository secrets (Settings > Secrets and variables > Actions):
-#   FTP_SERVER    your host's FTP address, e.g. ftp.maxdodson.co.uk
-#   FTP_USERNAME  your FTP username
-#   FTP_PASSWORD  your FTP password
+#   FTP_SERVER    your host's server address, e.g. ftp.c2faa13dk.service.one
+#   FTP_USERNAME  your account username
+#   FTP_PASSWORD  your account password
 # Optional repository variables (same page, "Variables" tab):
-#   FTP_PROTOCOL  ftps (default, encrypted) or ftp if your host doesn't offer FTPS.
-#                 SFTP isn't supported by this upload step.
-#   FTP_DIR       folder the site lives in on the server, default public_html/
+#   FTP_PORT      SFTP port, default 22
+#   FTP_DIR       folder the site lives in on the server, default public_html
 
 name: Deploy website
 
@@ -33,14 +32,16 @@ jobs:
           mkdir -p _site
           cp -r index.html cv assets _site/
 
-      - name: Upload to host
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+      - name: Upload to host over SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
           server: ${{ secrets.FTP_SERVER }}
+          port: ${{ vars.FTP_PORT || '22' }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
-          local-dir: ./_site/
-          server-dir: ${{ vars.FTP_DIR || 'public_html/' }}
-          # Only upload and overwrite; never delete anything already on the server
-          dangerous-clean-slate: false
+          ssh_private_key: ''
+          local_path: ./_site/*
+          remote_path: ${{ vars.FTP_DIR || 'public_html' }}
+          sftp_only: true
+          # Never delete anything already on the server (e.g. WordPress's files)
+          delete_remote_files: false
