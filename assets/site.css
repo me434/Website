@@ -642,6 +642,8 @@ a.media > img { transition: transform 1.2s var(--ease-out); }
 /* Title and intro span the full content width */
 .block-head > div { flex: 1 1 100%; }
 .block-sub { color: var(--ink-2); font-size: var(--fs-small); margin-top: 12px; }
+/* Impact-style figures sitting between a block header and its images */
+.block-stats { margin-bottom: clamp(40px, 5vw, 64px); }
 
 /* Horizontal phone scroller */
 .scroller { position: relative; }
