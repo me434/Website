@@ -695,6 +695,9 @@ a.media > img { transition: transform 1.2s var(--ease-out); }
   .m-2 { grid-column: span 3; }
 }
 
+/* A full-width film above the reels */
+.film-top { margin-bottom: clamp(24px, 3vw, 40px); }
+
 /* Vertical ad films */
 .reels { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 3.16fr); gap: clamp(12px, 2vw, 24px); align-items: start; }
 .reel .film-frame { aspect-ratio: 9 / 16; }
