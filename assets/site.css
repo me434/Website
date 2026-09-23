@@ -702,6 +702,8 @@ a.media > img { transition: transform 1.2s var(--ease-out); }
 }
 @keyframes swipe { to { background-size: 100% .2em; } }
 .home-hero .hero-sub { max-width: 30em; }
+/* Button sits under the intro, lined up with its left edge */
+.home-hero .hero-foot { flex-direction: column; align-items: flex-start; gap: 32px; }
 .hero-sub a { text-decoration-thickness: 1px; text-underline-offset: .18em; }
 .hero-sub a:hover { text-decoration-color: var(--accent); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
