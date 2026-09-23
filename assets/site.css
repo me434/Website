@@ -301,12 +301,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px 48px; }
 .brief-body { display: grid; gap: 28px; }
 .lead { font-family: var(--f-display); font-size: var(--fs-lead); font-weight: 300; letter-spacing: -.025em; line-height: 1.3; }
-.brief-cols { columns: 2; column-gap: 40px; color: var(--ink-2); margin-top: 20px; }
-.brief-cols p { max-width: 62ch; break-inside: avoid; margin-bottom: 28px; }
-.brief-cols p:last-child { margin-bottom: 0; }
+/* Supporting paragraphs stack one under another */
+.brief-cols { display: grid; gap: 28px; color: var(--ink-2); margin-top: 20px; }
+.brief-cols p { max-width: 62ch; }
 @media (max-width: 760px) {
   .split { grid-template-columns: 1fr; }
-  .brief-cols { columns: 1; }
 }
 
 /* ---------- Contact ---------- */
