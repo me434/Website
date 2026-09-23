@@ -1,0 +1,46 @@
+# Uploads the website to maxdodson.co.uk over FTP.
+# Runs automatically when changes reach main, or by hand from the Actions tab.
+#
+# Needs these repository secrets (Settings > Secrets and variables > Actions):
+#   FTP_SERVER    your host's FTP address, e.g. ftp.maxdodson.co.uk
+#   FTP_USERNAME  your FTP username
+#   FTP_PASSWORD  your FTP password
+# Optional repository variables (same page, "Variables" tab):
+#   FTP_PROTOCOL  ftps (default, encrypted) or ftp if your host doesn't offer FTPS.
+#                 SFTP isn't supported by this upload step.
+#   FTP_DIR       folder the site lives in on the server, default public_html/
+
+name: Deploy website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Only the site itself goes to the server, not repo files like this one
+      - name: Collect site files
+        run: |
+          mkdir -p _site
+          cp -r index.html cv assets _site/
+
+      - name: Upload to host
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
+          local-dir: ./_site/
+          server-dir: ${{ vars.FTP_DIR || 'public_html/' }}
+          # Only upload and overwrite; never delete anything already on the server
+          dangerous-clean-slate: false
