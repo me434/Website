@@ -1,4 +1,4 @@
-/* Max Dodson — CV · shared behaviour
+/* Max Dodson — site · shared behaviour
    Everything here is progressive: without JS the pages read fine and show every image. */
 (() => {
   const doc = document.documentElement;
