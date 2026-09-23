@@ -215,6 +215,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* The icon under the knob shows through in the page colour */
 .theme-switch[aria-checked="false"] .ts-sun,
 .theme-switch[aria-checked="true"] .ts-moon { color: var(--ground); }
+.ts-label { display: none; margin-left: 10px; font-size: var(--fs-small); color: var(--ink-2); }
+@media (min-width: 761px) {
+  .ts-label { display: inline-block; }
+}
 
 /* ---------- Word rise (page load) ---------- */
 [data-split] .w { display: inline-block; overflow: clip; vertical-align: top; padding-bottom: .06em; margin-bottom: -.06em; }
