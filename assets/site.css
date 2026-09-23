@@ -639,7 +639,9 @@ a.media > img { transition: transform 1.2s var(--ease-out); }
 .block-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 32px; }
 .block-title { font-family: var(--f-display); font-size: clamp(1.75rem, 3.2vw, 2.75rem); font-weight: 300; letter-spacing: -.035em; line-height: 1.05; }
 .block-title sup { font-family: var(--f-mono); font-size: .75rem; color: var(--muted); letter-spacing: 0; margin-left: .4em; }
-.block-sub { color: var(--ink-2); max-width: 52ch; font-size: var(--fs-small); margin-top: 12px; }
+/* Title and intro span the full content width */
+.block-head > div { flex: 1 1 100%; }
+.block-sub { color: var(--ink-2); font-size: var(--fs-small); margin-top: 12px; }
 
 /* Horizontal phone scroller */
 .scroller { position: relative; }
