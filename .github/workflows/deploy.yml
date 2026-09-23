@@ -45,3 +45,17 @@ jobs:
           sftp_only: true
           # Never delete anything already on the server (e.g. WordPress's files)
           delete_remote_files: false
+
+      # A bare * glob never matches dotfiles, so .htaccess needs its own upload
+      - name: Upload .htaccess over SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          port: ${{ vars.FTP_PORT || '22' }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          ssh_private_key: ''
+          local_path: ./_site/.htaccess
+          remote_path: ${{ vars.FTP_DIR || 'webroots/by-route/maxdodson.co.uk_' }}
+          sftp_only: true
+          delete_remote_files: false
