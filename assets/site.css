@@ -688,6 +688,8 @@ a.media > img { transition: transform 1.2s var(--ease-out); }
 .m-frame.r-phone { aspect-ratio: 856 / 1731; background: transparent; border: 0; }
 .m-frame.r-phone img { object-fit: contain; }
 .m-frame.r-photo { aspect-ratio: 4 / 3; }
+/* Whole image, uncropped, at its own shape */
+.m-frame.r-full img { height: auto; }
 @media (max-width: 900px) {
   .m-4, .m-3 { grid-column: span 6; }
   .m-2 { grid-column: span 2; }
