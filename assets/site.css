@@ -314,7 +314,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .contact-row {
   position: relative; isolation: isolate;
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto; gap: 16px 48px; align-items: center;
-  padding: clamp(18px, 2.4vw, 28px) 0;
+  /* 26px either side on larger screens, easing down to 12px on phones */
+  padding: clamp(18px, 2.4vw, 28px) clamp(12px, 3vw, 26px);
   border-bottom: 1px solid var(--line);
   overflow: hidden;
 }
@@ -329,7 +330,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .contact-row:hover .label, .contact-row:focus-within .label { color: var(--faint); }
 .contact-row .label { transition: color .3s; }
 .contact-value {
-  font-family: var(--f-display); font-weight: 300; font-size: clamp(1.5rem, 3.4vw, 3rem); letter-spacing: -.035em; line-height: 1.1;
+  font-family: var(--f-display); font-weight: 300; font-size: clamp(1.3rem, 3.4vw + .4rem, 3rem); letter-spacing: -.035em; line-height: 1.1;
   text-decoration: none; overflow-wrap: anywhere;
 }
 .contact-value::after { content: ""; position: absolute; inset: 0; z-index: 0; }
@@ -342,7 +343,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .copy-btn:hover { opacity: 1; }
 @media (max-width: 760px) {
-  .contact-row { grid-template-columns: 1fr auto; }
+  .contact-row { grid-template-columns: 1fr auto; column-gap: 12px; }
   .contact-row .label { grid-column: 1 / -1; }
 }
 
