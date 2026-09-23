@@ -29,7 +29,12 @@
     if (saved === 'dark' || saved === 'light') doc.dataset.theme = saved;
   } catch {}
   $$('[data-theme-toggle]').forEach(sw => {
-    const paint = () => sw.setAttribute('aria-checked', themeNow() === 'dark' ? 'true' : 'false');
+    const label = $('[data-theme-label]', sw);
+    const paint = () => {
+      const dark = themeNow() === 'dark';
+      sw.setAttribute('aria-checked', dark ? 'true' : 'false');
+      if (label) label.textContent = dark ? 'Dark' : 'Light';
+    };
     sw.addEventListener('click', () => {
       const next = themeNow() === 'dark' ? 'light' : 'dark';
       doc.dataset.theme = next;
