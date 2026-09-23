@@ -682,23 +682,6 @@ a.media > img { transition: transform 1.2s var(--ease-out); }
 .hero-sub a:hover { text-decoration-color: var(--accent); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
-.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px clamp(24px, 3vw, 40px); }
-.case { display: grid; gap: 14px; align-content: start; text-decoration: none; }
-.case .media { display: block; margin-bottom: 10px; }
-.case .media > img { transition: transform 1.2s var(--ease-out); }
-.case:hover .media > img { transform: translateY(var(--py, 0)) scale(1.14); }
-.case-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-.case-head .tl-logo { margin: 0; }
-.case-title { font-family: var(--f-display); font-size: var(--fs-h2); font-weight: 300; letter-spacing: -.045em; line-height: 1; }
-.case-sub { color: var(--ink-2); max-width: 46ch; }
-.case-go { display: inline-flex; gap: .5em; align-items: center; font-size: var(--fs-small); margin-top: 4px; }
-.case-go .arrow { display: inline-block; transition: transform .35s var(--ease-out); }
-.case:hover .case-go .arrow { transform: translateX(4px); }
-.next--cv { margin-top: clamp(72px, 9vw, 128px); }
-@media (max-width: 760px) {
-  .cases { grid-template-columns: 1fr; }
-}
-
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
