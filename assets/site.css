@@ -187,11 +187,34 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .head-nav a:hover { color: var(--ink); }
 .head-nav a:hover::after, .head-nav a[aria-current="true"]::after { transform: scaleX(1); transform-origin: left; }
-.head-back { font-size: var(--fs-small); color: var(--ink-2); text-decoration: none; display: inline-flex; gap: .5em; align-items: center; }
+.head-back { font-size: var(--fs-small); color: var(--ink-2); text-decoration: none; display: inline-flex; gap: .5em; align-items: center; white-space: nowrap; }
 .head-back:hover { color: var(--ink); }
 @media (max-width: 760px) {
   .head-nav { display: none; }
 }
+@media (max-width: 480px) {
+  .head-inner { gap: 14px; }
+}
+
+/* ---------- Light / dark switch ---------- */
+.theme-switch { display: none; align-items: center; min-height: 44px; padding: 0; border: 0; background: none; border-radius: 999px; }
+.js .theme-switch { display: inline-flex; }
+.ts-track {
+  position: relative; width: 60px; height: 32px; padding-inline: 8px;
+  display: flex; align-items: center; justify-content: space-between;
+  border: 1px solid var(--line-strong); border-radius: 999px; color: var(--muted);
+  transition: border-color .3s;
+}
+.theme-switch:hover .ts-track { border-color: var(--ink); }
+.ts-track svg { position: relative; z-index: 1; width: 14px; height: 14px; transition: color .35s var(--ease-out); }
+.ts-knob {
+  position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--ink); transition: transform .45s var(--ease-out);
+}
+.theme-switch[aria-checked="true"] .ts-knob { transform: translateX(28px); }
+/* The icon under the knob shows through in the page colour */
+.theme-switch[aria-checked="false"] .ts-sun,
+.theme-switch[aria-checked="true"] .ts-moon { color: var(--ground); }
 
 /* ---------- Word rise (page load) ---------- */
 [data-split] .w { display: inline-block; overflow: clip; vertical-align: top; padding-bottom: .06em; margin-bottom: -.06em; }

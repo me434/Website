@@ -21,6 +21,25 @@
     onScroll();
   }
 
+  /* ---------- Light / dark switch (remembers the visitor's choice) ---------- */
+  const darkMq = matchMedia('(prefers-color-scheme: dark)');
+  const themeNow = () => doc.dataset.theme || (darkMq.matches ? 'dark' : 'light');
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || saved === 'light') doc.dataset.theme = saved;
+  } catch {}
+  $$('[data-theme-toggle]').forEach(sw => {
+    const paint = () => sw.setAttribute('aria-checked', themeNow() === 'dark' ? 'true' : 'false');
+    sw.addEventListener('click', () => {
+      const next = themeNow() === 'dark' ? 'light' : 'dark';
+      doc.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch {}
+      paint();
+    });
+    darkMq.addEventListener('change', paint);
+    paint();
+  });
+
   /* ---------- Word split for load-in rise ---------- */
   $$('[data-split]').forEach(el => {
     let i = 0;

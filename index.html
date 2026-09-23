@@ -2,6 +2,7 @@
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
+<script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Max Dodson — Designer in Surrey</title>
 <meta name="description" content="Max Dodson is a designer based in Surrey with 15+ years shaping products for desktop and mobile. Currently Head of Design at Just Insure.">
@@ -28,6 +29,13 @@
       <a href="cv/">CV</a>
       <a href="#contact">Contact</a>
     </nav>
+    <button class="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Dark mode" data-theme-toggle>
+      <span class="ts-track" aria-hidden="true">
+        <svg class="ts-sun" viewBox="0 0 20 20"><circle cx="10" cy="10" r="3.5" fill="currentColor"/><path d="M10 1.5v2.2M10 16.3v2.2M1.5 10h2.2M16.3 10h2.2M4 4l1.55 1.55M14.45 14.45L16 16M4 16l1.55-1.55M14.45 5.55L16 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <svg class="ts-moon" viewBox="0 0 20 20"><path d="M16.2 12.4A7 7 0 0 1 7.6 3.8a7 7 0 1 0 8.6 8.6z" fill="currentColor"/></svg>
+        <span class="ts-knob"></span>
+      </span>
+    </button>
     <a class="pill pill--ink pill--sm" href="#contact">Get in touch</a>
   </div>
 </header>
