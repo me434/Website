@@ -2,12 +2,12 @@
 # Runs automatically when changes reach main, or by hand from the Actions tab.
 #
 # Needs these repository secrets (Settings > Secrets and variables > Actions):
-#   FTP_SERVER    your host's server address, e.g. ftp.c2faa13dk.service.one
+#   FTP_SERVER    your host's server address, e.g. ssh.c2faa13dk.service.one
 #   FTP_USERNAME  your account username
 #   FTP_PASSWORD  your account password
 # Optional repository variables (same page, "Variables" tab):
 #   FTP_PORT      SFTP port, default 22
-#   FTP_DIR       folder the site lives in on the server, default public_html
+#   FTP_DIR       folder the site lives in on the server, default webroots/by-route/maxdodson.co.uk_
 
 name: Deploy website
 
@@ -30,7 +30,7 @@ jobs:
       - name: Collect site files
         run: |
           mkdir -p _site
-          cp -r index.html cv assets _site/
+          cp -r index.html cv assets .htaccess _site/
 
       - name: Upload to host over SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.6
@@ -41,7 +41,21 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           ssh_private_key: ''
           local_path: ./_site/*
-          remote_path: ${{ vars.FTP_DIR || 'public_html' }}
+          remote_path: ${{ vars.FTP_DIR || 'webroots/by-route/maxdodson.co.uk_' }}
           sftp_only: true
           # Never delete anything already on the server (e.g. WordPress's files)
+          delete_remote_files: false
+
+      # A bare * glob never matches dotfiles, so .htaccess needs its own upload
+      - name: Upload .htaccess over SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          port: ${{ vars.FTP_PORT || '22' }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          ssh_private_key: ''
+          local_path: ./_site/.htaccess
+          remote_path: ${{ vars.FTP_DIR || 'webroots/by-route/maxdodson.co.uk_' }}
+          sftp_only: true
           delete_remote_files: false
