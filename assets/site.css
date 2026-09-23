@@ -693,6 +693,7 @@ a.media > img { transition: transform 1.2s var(--ease-out); }
 /* ==========================================================================
    Homepage
    ========================================================================== */
+.home-hero { padding-bottom: calc(clamp(48px, 7vw, 96px) + 60px); }
 .home-hero .hero-title { max-width: 12.5em; }
 /* Highlighter swipe under "designer", drawn once the words have risen */
 .hl {
