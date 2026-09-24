@@ -331,7 +331,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .contact-list { border-top: 1px solid var(--line); }
 .contact-row {
   position: relative; isolation: isolate;
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto; gap: 16px 48px; align-items: center;
+  /* Fixed action column so the values line up across rows */
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) 7rem; gap: 16px 48px; align-items: center;
   /* 26px either side on larger screens, easing down to 12px on phones */
   padding: clamp(18px, 2.4vw, 28px) clamp(12px, 3vw, 26px);
   border-bottom: 1px solid var(--line);
@@ -348,11 +349,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .contact-row:hover .label, .contact-row:focus-within .label { color: var(--faint); }
 .contact-row .label { transition: color .3s; }
 .contact-value {
-  font-family: var(--f-display); font-weight: 300; font-size: clamp(1.3rem, 3.4vw + .4rem, 3rem); letter-spacing: -.035em; line-height: 1.1;
+  font-family: var(--f-display); font-weight: 300; font-size: clamp(1.3rem, 1.6vw + .6rem, 2rem); letter-spacing: -.035em; line-height: 1.1;
   text-decoration: none; overflow-wrap: anywhere;
 }
 .contact-value::after { content: ""; position: absolute; inset: 0; z-index: 0; }
-.contact-actions { position: relative; z-index: 1; display: flex; gap: 8px; align-items: center; font-size: var(--fs-small); }
+.contact-actions { position: relative; z-index: 1; display: flex; gap: 8px; align-items: center; justify-content: flex-end; font-size: var(--fs-small); }
 .contact-go { display: inline-flex; gap: .5em; align-items: center; transition: transform .45s var(--ease-out); }
 .contact-row:hover .contact-go { transform: translateX(-6px); }
 .copy-btn {
