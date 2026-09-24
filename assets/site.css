@@ -21,6 +21,7 @@
   --shadow: 0 1px 2px rgba(18, 19, 18, .06), 0 12px 40px -12px rgba(18, 19, 18, .18);
   --logo-filter: none;
   --focus: #121312;
+  --map-veil: .5;
 
   --f-display: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --f-body: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -62,6 +63,7 @@
     --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 40px -12px rgba(0, 0, 0, .6);
     --logo-filter: invert(1);
     --focus: #F6C23A;
+    --map-veil: .75;
     color-scheme: dark;
   }
 }
@@ -83,6 +85,7 @@
   --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 40px -12px rgba(0, 0, 0, .6);
   --logo-filter: invert(1);
   --focus: #F6C23A;
+  --map-veil: .75;
   color-scheme: dark;
 }
 
@@ -455,8 +458,7 @@ a.media { display: block; }
 /* Edge-to-edge diagram, shown whole and washed into the page colour */
 .media--map { aspect-ratio: auto; border-radius: 0; }
 .media--map > img { height: auto; transform: none; }
-.media--map::after { content: ""; position: absolute; inset: 0; background: var(--ground); opacity: .5; pointer-events: none; }
-.media--map .media-tag { left: var(--gutter); }
+.media--map::after { content: ""; position: absolute; inset: 0; background: var(--ground); opacity: var(--map-veil); pointer-events: none; }
 /* An image placed under an entry's buttons */
 .tl-media { max-width: 640px; margin-top: 12px; }
 a.media:hover > img { transform: translateY(var(--py, 0)) scale(1.14); }
