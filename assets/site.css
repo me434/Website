@@ -456,8 +456,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
   -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
 }
 a.media { display: block; }
-/* An image placed under an entry's buttons */
-.tl-media { max-width: 640px; margin-top: 12px; }
 a.media:hover > img { transform: translateY(var(--py, 0)) scale(1.14); }
 a.media > img { transition: transform 1.2s var(--ease-out); }
 
