@@ -313,8 +313,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .lead-col h3 { font-size: var(--fs-body); font-weight: 500; margin-bottom: 10px; }
 .lead-col p { font-size: var(--fs-small); color: var(--ink-2); line-height: 1.5; max-width: 38ch; }
 @media (max-width: 760px) {
-  .lead-cols { grid-template-columns: 1fr; }
-  .lead-col + .lead-col { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); margin-top: 24px; }
+  /* Stacked rows spaced and ruled like the AI tools list */
+  .lead-cols { grid-template-columns: 1fr; border-top: 0; border-bottom: 1px solid var(--line); }
+  .lead-col, .lead-col + .lead-col { padding: 28px 0; border-left: 0; border-top: 1px solid var(--line); }
 }
 
 /* ---------- Brief ---------- */
