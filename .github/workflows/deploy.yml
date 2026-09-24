@@ -31,6 +31,10 @@ jobs:
         run: |
           mkdir -p _site
           cp -r index.html cv assets .htaccess _site/
+          # Give the shared CSS/JS a new URL on every deploy so browsers never keep a stale copy
+          v="${GITHUB_SHA::8}"
+          find _site -name '*.html' -exec sed -i -E "s#(assets/site\.(css|js))\"#\1?v=$v\"#g" {} +
+          grep -rho 'assets/site\.\(css\|js\)?v=[0-9a-f]*' _site | sort | uniq -c
 
       - name: Upload to host over SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.6
