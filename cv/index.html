@@ -371,11 +371,24 @@
     </ul>
   </section>
 
-  <!-- 7 · Gaia member journey map -->
-  <section aria-label="Gaia member journey map">
-    <figure class="media media--map" data-reveal>
-      <img src="../assets/media/2025/08/gaia-Member-journey-scaled.jpg" alt="Gaia member journey map, from sign-up through treatment" width="2560" height="984" loading="lazy">
-    </figure>
+  <!-- 7 · Customer journey map -->
+  <section class="section" id="journey-map" aria-labelledby="journey-title">
+    <div class="wrap sec-head">
+      <h2 class="sec-title" id="journey-title">Customer journey map</h2>
+      <p class="sec-intro">Gaia’s member journey, from first hearing about Gaia through to treatment. Drag or use the arrows to scroll across it.</p>
+    </div>
+    <div class="scroller scroller--map" data-scroller>
+      <div class="scroller-track" tabindex="0" aria-label="Gaia member journey map, scroll horizontally">
+        <img class="map-img" src="../assets/media/2025/08/gaia-Member-journey-scaled.jpg" alt="Gaia member journey map, from sign-up through treatment" width="2560" height="984" loading="lazy">
+      </div>
+      <div class="wrap scroller-ui">
+        <div class="scroller-bar" aria-hidden="true"><span></span></div>
+        <div class="scroller-btns">
+          <button class="round-btn" type="button" data-prev aria-label="Scroll the journey map left">←</button>
+          <button class="round-btn" type="button" data-next aria-label="Scroll the journey map right">→</button>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- 8 · Video -->
