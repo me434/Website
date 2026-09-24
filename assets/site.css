@@ -302,6 +302,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 
 /* ---------- Leadership ---------- */
+/* Follows the brief directly, so it only takes the brief's bottom spacing */
+.lead-section { padding-top: 0; }
 .lead-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
 .lead-col { padding: 24px 24px 0 0; }
 .lead-col + .lead-col { padding-left: 24px; border-left: 1px solid var(--line); }
