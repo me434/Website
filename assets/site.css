@@ -363,13 +363,17 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 
 /* ---------- Disciplines ---------- */
+/* Full lines are justified edge to edge; each item stays in one piece */
 .disc-list {
-  display: flex; flex-wrap: wrap; align-items: center; row-gap: .3em;
-  font-family: var(--f-display); font-weight: 300; font-size: clamp(1.625rem, 3.2vw, 2.75rem); letter-spacing: -.03em; line-height: 1.15;
+  text-align: justify; text-align-last: left;
+  font-family: var(--f-display); font-weight: 300; font-size: clamp(1.625rem, 3.2vw, 2.75rem); letter-spacing: -.03em; line-height: 1.45;
 }
-.disc-list li { display: inline-flex; align-items: center; }
+.disc-list li { display: inline-block; white-space: nowrap; }
 /* Dots trail each item so a wrapped line never starts with one */
-.disc-list li:not(:last-child)::after { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-inline: .55em; flex: none; }
+.disc-list li:not(:last-child)::after { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin: 0 .3em 0 .55em; vertical-align: .28em; }
+@media (max-width: 760px) {
+  .disc-list { text-align: left; }
+}
 /* Highlighter swipe, drawn as the list scrolls into view */
 .disc-hl {
   background: linear-gradient(var(--accent), var(--accent)) no-repeat 0 86% / 100% .2em;
