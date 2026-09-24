@@ -452,9 +452,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
   -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
 }
 a.media { display: block; }
-/* A diagram shown whole at its own shape, never cropped */
-.media--map { aspect-ratio: auto; }
+/* Edge-to-edge diagram, shown whole and washed into the page colour */
+.media--map { aspect-ratio: auto; border-radius: 0; }
 .media--map > img { height: auto; transform: none; }
+.media--map::after { content: ""; position: absolute; inset: 0; background: var(--ground); opacity: .5; pointer-events: none; }
+.media--map .media-tag { left: var(--gutter); }
 /* An image placed under an entry's buttons */
 .tl-media { max-width: 640px; margin-top: 12px; }
 a.media:hover > img { transform: translateY(var(--py, 0)) scale(1.14); }
