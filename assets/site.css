@@ -366,14 +366,20 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .contact-row .label { grid-column: 1 / -1; }
 }
 
-/* ---------- Ribbon (disciplines marquee) ---------- */
-.ribbon { border-block: 1px solid var(--line); overflow: hidden; padding-block: 18px; }
-.ribbon-track { display: flex; width: max-content; animation: marquee 48s linear infinite; }
-.ribbon:hover .ribbon-track { animation-play-state: paused; }
-.ribbon-set { display: flex; align-items: center; }
-.ribbon-set span { font-family: var(--f-display); font-weight: 300; font-size: clamp(1.25rem, 2.2vw, 1.75rem); letter-spacing: -.02em; white-space: nowrap; padding-inline: 22px; }
-.ribbon-set i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex: none; }
-@keyframes marquee { to { transform: translateX(-50%); } }
+/* ---------- Disciplines ---------- */
+.disc-list {
+  display: flex; flex-wrap: wrap; align-items: center; row-gap: .3em;
+  font-family: var(--f-display); font-weight: 300; font-size: clamp(1.625rem, 3.2vw, 2.75rem); letter-spacing: -.03em; line-height: 1.15;
+}
+.disc-list li { display: inline-flex; align-items: center; }
+/* Dots trail each item so a wrapped line never starts with one */
+.disc-list li:not(:last-child)::after { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-inline: .55em; flex: none; }
+/* Highlighter swipe, drawn as the list scrolls into view */
+.disc-hl {
+  background: linear-gradient(var(--accent), var(--accent)) no-repeat 0 86% / 100% .2em;
+  transition: background-size 1s var(--ease-out) .35s;
+}
+.disc-list.is-pending .disc-hl { background-size: 0 .2em; }
 
 /* ---------- Timeline ---------- */
 .tl { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 0 32px; }
@@ -768,7 +774,6 @@ a.media > img { transition: transform 1.2s var(--ease-out); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; transition-delay: 0s !important; }
-  .ribbon-track { animation: none; }
   [data-reveal].is-pending { opacity: 1; transform: none; }
   .media > img, .media > video { transform: none; }
   .hl { background-size: 100% .2em; }
