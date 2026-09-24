@@ -398,7 +398,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .tl-item.is-passed .tl-node { border-color: var(--accent); }
 .tl-item.is-passed .tl-node::after { background: var(--accent); transform: scale(1.25); }
 
-.tl-item--feature { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 32px clamp(32px, 4vw, 64px); align-items: start; }
+/* Entries with media show it full width underneath the text */
+.tl-item--feature { display: grid; gap: 32px; }
+.tl-item--feature > .media:not(.media--wide) { aspect-ratio: 16 / 9; }
 .tl-text { display: grid; gap: 14px; align-content: start; }
 .tl-logo {
   width: 132px; height: 56px; border-radius: var(--radius-sm); background: var(--plate);
@@ -460,7 +462,6 @@ a.media > img { transition: transform 1.2s var(--ease-out); }
 @media (max-width: 1000px) {
   .tl { grid-template-columns: 1fr; }
   .tl-side { display: none; }
-  .tl-item--feature { grid-template-columns: 1fr; }
   .media--wide { aspect-ratio: 16 / 9; }
 }
 @media (max-width: 560px) {
