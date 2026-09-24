@@ -21,7 +21,6 @@
   --shadow: 0 1px 2px rgba(18, 19, 18, .06), 0 12px 40px -12px rgba(18, 19, 18, .18);
   --logo-filter: none;
   --focus: #121312;
-  --map-veil: .5;
 
   --f-display: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --f-body: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -63,7 +62,6 @@
     --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 40px -12px rgba(0, 0, 0, .6);
     --logo-filter: invert(1);
     --focus: #F6C23A;
-    --map-veil: .75;
     color-scheme: dark;
   }
 }
@@ -85,7 +83,6 @@
   --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 40px -12px rgba(0, 0, 0, .6);
   --logo-filter: invert(1);
   --focus: #F6C23A;
-  --map-veil: .75;
   color-scheme: dark;
 }
 
@@ -456,10 +453,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
   -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
 }
 a.media { display: block; }
-/* Edge-to-edge diagram, shown whole and washed into the page colour */
-.media--map { aspect-ratio: auto; border-radius: 0; }
-.media--map > img { height: auto; transform: none; }
-.media--map::after { content: ""; position: absolute; inset: 0; background: var(--ground); opacity: var(--map-veil); pointer-events: none; }
 /* An image placed under an entry's buttons */
 .tl-media { max-width: 640px; margin-top: 12px; }
 a.media:hover > img { transform: translateY(var(--py, 0)) scale(1.14); }
@@ -697,6 +690,12 @@ a.media > img { transition: transform 1.2s var(--ease-out); }
 .round-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-strong); background: none; display: grid; place-items: center; transition: background-color .3s, color .3s, border-color .3s; }
 .round-btn:hover { background: var(--ink); color: var(--ground); border-color: var(--ink); }
 .round-btn:disabled { opacity: .35; pointer-events: none; }
+/* One wide image shown at a readable size, scrolled freely rather than snapped */
+.scroller--map .scroller-track { scroll-snap-type: none; }
+.map-img { flex: none; height: 984px; width: auto; max-width: none; border-radius: var(--radius); -webkit-user-drag: none; user-select: none; }
+@media (max-width: 760px) {
+  .map-img { height: 560px; }
+}
 
 /* Web / image mosaic */
 .mosaic { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 20px); }

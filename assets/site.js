@@ -335,8 +335,8 @@
     };
     const step = dir => {
       const card = track.querySelector('.screen');
-      const w = card ? card.getBoundingClientRect().width + 24 : track.clientWidth * 0.8;
-      track.scrollBy({ left: dir * w * 2, behavior: reduce ? 'auto' : 'smooth' });
+      const dist = card ? (card.getBoundingClientRect().width + 24) * 2 : track.clientWidth * 0.8;
+      track.scrollBy({ left: dir * dist, behavior: reduce ? 'auto' : 'smooth' });
     };
     prev && prev.addEventListener('click', () => step(-1));
     next && next.addEventListener('click', () => step(1));
