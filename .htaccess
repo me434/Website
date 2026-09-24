@@ -1,1 +1,8 @@
 DirectoryIndex index.html index.php
+
+# Pages always check for a newer version; their CSS/JS links change on every deploy
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
