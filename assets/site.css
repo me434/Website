@@ -119,6 +119,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .section { padding-block: clamp(88px, 12vw, 168px); }
 /* Back-to-back sections share one gap instead of stacking two */
 .section + .section { padding-top: 0; }
+/* First section after a page intro: same gap as inside the intro */
+.section--after-intro { padding-top: clamp(48px, 7vw, 96px); }
 .mono, .label { font-family: var(--f-mono); }
 .label {
   font-size: var(--fs-label);
