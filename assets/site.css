@@ -117,8 +117,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .wrap { width: 100%; max-width: 1360px; margin-inline: auto; padding-inline: var(--gutter); }
 .section { padding-block: clamp(88px, 12vw, 168px); }
-/* Sits close under the section before it, as a pair */
-.section--follow { padding-top: 0; }
+/* Back-to-back sections share one gap instead of stacking two */
+.section + .section { padding-top: 0; }
 .mono, .label { font-family: var(--f-mono); }
 .label {
   font-size: var(--fs-label);
@@ -302,8 +302,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 
 /* ---------- Leadership ---------- */
-/* Follows the brief directly, so it only takes the brief's bottom spacing */
-.lead-section { padding-top: 0; }
 .lead-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
 .lead-col { padding: 24px 24px 0 0; }
 .lead-col + .lead-col { padding-left: 24px; border-left: 1px solid var(--line); }
@@ -755,7 +753,8 @@ a.media > img { transition: transform 1.2s var(--ease-out); }
 /* ==========================================================================
    Homepage
    ========================================================================== */
-.home-hero { padding-bottom: calc(clamp(48px, 7vw, 96px) + 60px); }
+/* Same gap to the next section as everywhere else */
+.home-hero { padding-bottom: clamp(88px, 12vw, 168px); }
 .home-hero .hero-title { max-width: 12.5em; }
 /* Highlighter swipe under "designer", drawn once the words have risen */
 .hl {
