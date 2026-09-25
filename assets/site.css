@@ -251,6 +251,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .sec-title { font-family: var(--f-display); font-size: var(--fs-h2); font-weight: 300; letter-spacing: -.035em; line-height: 1; }
 .sec-title sup { font-family: var(--f-mono); font-size: .8rem; letter-spacing: 0; color: var(--muted); vertical-align: top; margin-left: .35em; position: relative; top: .35em; }
 .sec-intro { color: var(--ink-2); max-width: 52ch; font-size: var(--fs-small); }
+/* When the copy that follows is itself the intro */
+.sec-head--tight { margin-bottom: clamp(24px, 3vw, 36px); }
 
 /* ==========================================================================
    CV page
@@ -314,6 +316,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* ---------- Brief ---------- */
 .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px 48px; }
 .brief-body { display: grid; gap: 28px; }
+/* Keep the lead to a comfortable line length now it spans the page */
+.brief-body > .lead { max-width: 28em; }
 .lead { font-family: var(--f-display); font-size: var(--fs-lead); font-weight: 300; letter-spacing: -.025em; line-height: 1.3; }
 /* Supporting paragraphs stack one under another */
 .brief-cols { display: grid; gap: 28px; color: var(--ink-2); margin-top: 20px; }
