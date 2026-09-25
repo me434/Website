@@ -255,19 +255,6 @@
   addEventListener('resize', req);
   frame();
 
-  /* ---------- Nav: mark the section in view ---------- */
-  const navLinks = $$('.head-nav a[href^="#"]');
-  if (navLinks.length && 'IntersectionObserver' in window) {
-    const map = new Map(navLinks.map(a => [a.getAttribute('href').slice(1), a]));
-    const nio = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        const a = map.get(e.target.id);
-        if (a) a.setAttribute('aria-current', e.isIntersecting ? 'true' : 'false');
-      });
-    }, { rootMargin: '-45% 0px -50% 0px' });
-    map.forEach((_, id) => { const s = document.getElementById(id); if (s) nio.observe(s); });
-  }
-
   /* ---------- Copy email ---------- */
   $$('[data-copy]').forEach(btn => {
     const original = btn.textContent;
