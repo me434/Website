@@ -350,57 +350,133 @@
     track.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
   });
 
-  /* ---------- Gallery + lightbox ---------- */
+  /* ---------- Gallery: expanding strip + lightbox ---------- */
   const gal = $('[data-gallery]');
   if (gal && window.GALLERY) {
     const items = window.GALLERY;
-    const grid = $('.grid', gal);
     const filters = $('.filters', gal);
-    const moreBtn = $('[data-more]', gal);
-    const PAGE = 12;
-    let filter = 'all', expanded = false, view = [];
+    const reel = $('[data-reel]', gal);
+    const track = $('.reel-track', reel);
+    const cap = $('[data-reel-open]', gal);
+    const count = $('.reel-count', gal);
+    const DWELL = 3400;
+    let filter = 'all', view = [], panels = [], n = 0, copies = 1, pos = 0;
+    let dims = { c: 0, w: 0, a: 0, g: 0 };
+    let timer = null, hovering = false, inView = false, settle = null;
 
     const groups = [...new Set(items.map(i => i.group))];
-    const mkChip = (key, label, count) => {
+    const mkChip = (key, label, total) => {
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 'chip';
       b.dataset.filter = key;
       b.setAttribute('aria-pressed', key === filter ? 'true' : 'false');
-      b.innerHTML = `${label} <sup>${String(count).padStart(2, '0')}</sup>`;
-      b.addEventListener('click', () => { filter = key; expanded = false; render(true); });
+      b.innerHTML = `${label} <sup>${String(total).padStart(2, '0')}</sup>`;
+      b.addEventListener('click', () => { filter = key; build(); });
       return b;
     };
     filters.appendChild(mkChip('all', 'All', items.length));
     groups.forEach(g => filters.appendChild(mkChip(g, g, items.filter(i => i.group === g).length)));
 
-    function render(animate) {
+    function measure() {
+      const c = reel.clientWidth, h = reel.clientHeight;
+      const small = c < 640;
+      const w = Math.round(Math.max(small ? 34 : 56, Math.min(c * 0.075, 120)));
+      const a = Math.round(small ? c * 0.72 : Math.min(c * 0.6, h * 1.5));
+      const g = parseFloat(getComputedStyle(track).columnGap) || 10;
+      reel.style.setProperty('--w', w + 'px');
+      reel.style.setProperty('--a', a + 'px');
+      dims = { c, w, a, g };
+    }
+
+    // Enough copies of the set that the strip never runs out either side
+    function build() {
       $$('.chip', filters).forEach(c => c.setAttribute('aria-pressed', c.dataset.filter === filter ? 'true' : 'false'));
       view = items.filter(i => filter === 'all' || i.group === filter);
-      const shown = expanded ? view : view.slice(0, PAGE);
-      grid.innerHTML = '';
-      shown.forEach((it, idx) => {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'tile' + (animate ? ' is-entering' : '');
-        b.style.setProperty('--td', `${Math.min(idx, 12) * 35}ms`);
-        b.setAttribute('aria-label', `${it.title}, ${it.group}. Open larger`);
-        b.innerHTML = `<img src="${it.thumb}" alt="" loading="lazy" decoding="async" width="400" height="284"><span class="tile-cap"><small>${it.group}</small>${it.title}</span>`;
-        b.addEventListener('click', () => openLb(idx));
-        grid.appendChild(b);
-      });
-      const rest = view.length - shown.length;
-      moreBtn.hidden = rest <= 0;
-      moreBtn.innerHTML = `Show all ${view.length} <span class="arrow">↓</span>`;
+      n = view.length;
+      measure();
+      const perCopy = n * (dims.w + dims.g);
+      copies = Math.max(3, Math.ceil((dims.c * 2 + dims.a) / perCopy) | 1);
+      if (copies % 2 === 0) copies += 1;
+      track.innerHTML = '';
+      panels = [];
+      for (let k = 0; k < copies; k++) {
+        view.forEach((it, i) => {
+          const p = document.createElement('div');
+          p.className = 'reel-panel';
+          p.dataset.index = panels.length;
+          p.innerHTML = `<img src="${it.full}" alt="" loading="lazy" decoding="async">`;
+          track.appendChild(p);
+          panels.push(p);
+        });
+      }
+      pos = Math.floor(copies / 2) * n;
+      place(false);
+      restart();
     }
-    moreBtn.addEventListener('click', () => {
-      expanded = true;
-      const from = grid.children.length;
-      render(false);
-      [...grid.children].slice(from).forEach((t, k) => { t.classList.add('is-entering'); t.style.setProperty('--td', `${Math.min(k, 12) * 35}ms`); });
-      grid.children[from] && grid.children[from].focus({ preventScroll: true });
+
+    const itemAt = p => view[((p % n) + n) % n];
+
+    function place(animate) {
+      reel.classList.toggle('is-still', !animate);
+      panels.forEach((p, j) => p.classList.toggle('is-active', j === pos));
+      const x = dims.c / 2 - (pos * (dims.w + dims.g) + dims.a / 2);
+      track.style.transform = `translate3d(${x}px, 0, 0)`;
+      // Load what's about to be seen, since the strip clips lazy images
+      for (let j = pos - 8; j <= pos + 10; j++) { const im = panels[j] && panels[j].firstChild; if (im && im.loading === 'lazy') im.loading = 'eager'; }
+      const it = itemAt(pos), i = ((pos % n) + n) % n;
+      cap.innerHTML = `<small>${it.group}</small><span>${it.title}</span>`;
+      cap.setAttribute('aria-label', `${it.title}, ${it.group}. Open full size`);
+      count.textContent = `${String(i + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}`;
+      if (!animate) { track.offsetHeight; reel.classList.remove('is-still'); }
+    }
+
+    // After a move, hop back to the same piece in the middle copy without animating
+    function go(target) {
+      pos = target;
+      place(true);
+      clearTimeout(settle);
+      settle = setTimeout(() => {
+        const base = Math.floor(copies / 2) * n;
+        const norm = base + (((pos - base) % n) + n) % n;
+        if (norm !== pos) { pos = norm; place(false); }
+      }, reduce ? 0 : 1150);
+    }
+
+    function tick() { go(pos + 1); }
+    function restart() {
+      clearInterval(timer); timer = null;
+      if (!reduce && inView && !hovering && n > 1 && !document.hidden) timer = setInterval(tick, DWELL);
+    }
+
+    reel.addEventListener('click', e => {
+      const p = e.target.closest('.reel-panel');
+      if (!p || moved) return;
+      const j = +p.dataset.index;
+      if (j === pos) openLb(((pos % n) + n) % n);
+      else { go(j); restart(); }
     });
-    render(false);
+    cap.addEventListener('click', () => openLb(((pos % n) + n) % n));
+    $('[data-reel-prev]', gal).addEventListener('click', () => { go(pos - 1); restart(); });
+    $('[data-reel-next]', gal).addEventListener('click', () => { go(pos + 1); restart(); });
+    reel.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { hovering = true; restart(); } });
+    reel.addEventListener('pointerleave', () => { hovering = false; restart(); });
+    // Swipe on touch
+    let sx = null, moved = false;
+    reel.addEventListener('pointerdown', e => { sx = e.clientX; moved = false; });
+    reel.addEventListener('pointerup', e => {
+      if (sx == null) return;
+      const dx = e.clientX - sx; sx = null;
+      if (Math.abs(dx) > 40) { moved = true; go(pos + (dx < 0 ? 1 : -1)); restart(); setTimeout(() => { moved = false; }, 0); }
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(es => { inView = es[0].isIntersecting; restart(); }, { threshold: 0.3 }).observe(reel);
+    }
+    document.addEventListener('visibilitychange', restart);
+    let rz;
+    const showIndex = i => { pos = Math.floor(copies / 2) * n + i; place(false); };
+    addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { const i = ((pos % n) + n) % n; build(); showIndex(i); }, 150); });
+    build();
 
     const lb = $('#lightbox');
     const lbImg = $('.lb-stage img', lb);
@@ -423,7 +499,7 @@
       if (typeof lb.showModal === 'function') lb.showModal(); else lb.setAttribute('open', '');
       doc.style.overflow = 'hidden';
     }
-    lb.addEventListener('close', () => { doc.style.overflow = ''; const t = grid.children[cur]; t && t.focus({ preventScroll: true }); });
+    lb.addEventListener('close', () => { doc.style.overflow = ''; showIndex(cur); restart(); cap.focus({ preventScroll: true }); });
     $('[data-lb-close]', lb).addEventListener('click', () => lb.close());
     $('[data-lb-prev]', lb).addEventListener('click', () => show(cur - 1));
     $('[data-lb-next]', lb).addEventListener('click', () => show(cur + 1));

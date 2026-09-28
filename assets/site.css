@@ -505,29 +505,30 @@ a.media > img { transition: transform 1.2s var(--ease-out); }
 .chip:hover { border-color: var(--ink); }
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
 .chip[aria-pressed="true"] sup { color: var(--faint); }
-.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
-@media (max-width: 1000px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 640px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
-.tile {
-  position: relative; display: block; width: 100%; padding: 0; border: 0; background: var(--surface);
-  border-radius: var(--radius-sm); overflow: hidden; aspect-ratio: 400 / 284; text-align: left;
+/* Expanding strip: tall slices, one opens wide and the strip drifts to keep it centred */
+.reel {
+  --h: clamp(300px, 42vw, 580px); --w: 90px; --a: 640px; --gap: clamp(8px, 1vw, 12px); --dur: 1.1s;
+  position: relative; overflow: hidden; height: var(--h);
+  touch-action: pan-y; user-select: none; -webkit-user-select: none;
 }
-.tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease-out), filter .5s; }
-.tile:hover img { transform: scale(1.06); }
-.tile-cap {
-  position: absolute; inset: auto 0 0 0; padding: 28px 12px 10px;
-  background: linear-gradient(to top, rgba(18, 19, 18, .75), transparent);
-  color: #F2F2EE; font-size: .8125rem; line-height: 1.3;
-  transform: translateY(100%); transition: transform .5s var(--ease-out);
+.reel-track {
+  display: flex; gap: var(--gap); height: 100%; width: max-content;
+  transition: transform var(--dur) var(--ease-io); will-change: transform;
 }
-.tile-cap small { display: block; font-family: var(--f-mono); font-size: .6875rem; letter-spacing: .05em; text-transform: uppercase; opacity: .75; }
-.tile:hover .tile-cap, .tile:focus-visible .tile-cap { transform: none; }
-.tile.is-entering { animation: tileIn .7s var(--ease-out) both; animation-delay: var(--td, 0s); }
-@keyframes tileIn { from { opacity: 0; transform: translateY(16px) scale(.98); } }
-.grid-more { display: flex; justify-content: center; margin-top: 36px; }
-@media (hover: none) {
-  .tile-cap { display: none; }
+.reel-panel {
+  position: relative; flex: none; width: var(--w); height: 100%; padding: 0; border: 0;
+  border-radius: var(--radius-sm); overflow: hidden; background: var(--surface); cursor: pointer;
+  transition: width var(--dur) var(--ease-io);
 }
+.reel-panel.is-active { width: var(--a); cursor: zoom-in; }
+.reel-panel img { width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; pointer-events: none; }
+.reel.is-still .reel-track, .reel.is-still .reel-panel { transition: none; }
+.reel-ui { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 24px; }
+.reel-cap { padding: 0; border: 0; background: none; text-align: left; font-size: var(--fs-small); line-height: 1.35; }
+.reel-cap small { display: block; font-family: var(--f-mono); font-size: .6875rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.reel-cap:hover span { text-decoration: underline; text-underline-offset: .18em; }
+.reel-nav { display: flex; align-items: center; gap: 8px; }
+.reel-count { font-family: var(--f-mono); font-size: .8125rem; letter-spacing: .04em; color: var(--muted); margin-right: 8px; }
 
 /* ---------- Lightbox ---------- */
 .lightbox {
