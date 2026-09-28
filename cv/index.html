@@ -432,15 +432,26 @@
   </section>
 
   <!-- 9 · Gallery -->
-  <section class="section wrap" id="gallery" aria-labelledby="gallery-title" data-gallery>
-    <div class="sec-head">
-      <h2 class="sec-title" id="gallery-title">Older work<sup>(46)</sup></h2>
-      <p class="sec-intro">Brand, ecommerce, legal and print work from before the startup years. Select any piece to see it full size.</p>
+  <section class="section" id="gallery" aria-labelledby="gallery-title" data-gallery>
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title" id="gallery-title">Older work<sup>(46)</sup></h2>
+        <p class="sec-intro">Brand, ecommerce, legal and print work from before the startup years. Select a piece to bring it forward, then select it again to see it full size.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filter older work"></div>
     </div>
-    <div class="filters" role="group" aria-label="Filter older work"></div>
-    <div class="grid"></div>
-    <noscript><p>Turn on JavaScript to browse the gallery.</p></noscript>
-    <div class="grid-more"><button class="pill pill--ghost" type="button" data-more hidden>Show all</button></div>
+    <div class="reel" data-reel aria-roledescription="carousel" aria-label="Older work">
+      <div class="reel-track"></div>
+    </div>
+    <div class="wrap reel-ui">
+      <button class="reel-cap" type="button" data-reel-open aria-live="polite"></button>
+      <div class="reel-nav">
+        <span class="reel-count" aria-hidden="true"></span>
+        <button class="round-btn" type="button" data-reel-prev aria-label="Previous piece">←</button>
+        <button class="round-btn" type="button" data-reel-next aria-label="Next piece">→</button>
+      </div>
+    </div>
+    <noscript><p class="wrap">Turn on JavaScript to browse the gallery.</p></noscript>
   </section>
 
 </main>
