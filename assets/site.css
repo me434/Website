@@ -521,7 +521,8 @@ a.media > img { transition: transform 1.2s var(--ease-out); }
   transition: width var(--dur) var(--ease-io);
 }
 .reel-panel.is-active { width: var(--a); cursor: zoom-in; }
-.reel-panel img { width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; pointer-events: none; }
+/* Crop from the top so websites show their header first */
+.reel-panel img { width: 100%; height: 100%; object-fit: cover; object-position: center top; -webkit-user-drag: none; pointer-events: none; }
 .reel.is-still .reel-track, .reel.is-still .reel-panel { transition: none; }
 .reel-ui { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 24px; }
 .reel-cap { padding: 0; border: 0; background: none; text-align: left; font-size: var(--fs-small); line-height: 1.35; }
